@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Synchronize password settings</string>
+    <string name="server_domain_heading">Domain of the sync server:</string>
+    <string name="path_heading">Path on the server:</string>
+    <string name="certificate_heading">SSL certificate of the CA which signed the server certificate:</string>
+    <string name="username_heading">Username:</string>
+    <string name="password_heading">Password:</string>
+    <string name="sync_on_mobile_data_label">Sync on mobile data</string>
+</resources>

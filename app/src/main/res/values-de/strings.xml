@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Synchronize password settings</string>
+    <string name="password_heading">Passwort:</string>
+    <string name="sync_on_mobile_data_label">Synchronisation auch über mobile Daten</string>
+    <string name="username_heading">Benutzername:</string>
+    <string name="path_heading">Pfad auf dem Server:</string>
+    <string name="server_domain_heading">Domain des Syncservers:</string>
+    <string name="certificate_heading">SSL Zertifikat der Root-CA, die das Zertifikat des Servers unterschrieben hat:</string>
+</resources>
