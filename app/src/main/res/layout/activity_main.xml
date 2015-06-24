@@ -74,9 +74,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/certificateErrors"
+                android:layout_below="@+id/certificate"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffff000c" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="@string/username_heading"
                 android:id="@+id/usernameHeading"
-                android:layout_below="@id/certificate"
+                android:layout_below="@id/certificateErrors"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 

@@ -5,9 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
+
+import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +35,24 @@ public class MainActivity extends AppCompatActivity {
         settingsEditor.putString("password", passwordInput.getText().toString());
         settingsEditor.putBoolean("syncOnMobileData", syncOnMobileDataSwitch.isChecked());
         settingsEditor.apply();
+    }
+
+    private void testCertificate() {
+        SyncServerConnection connectionObject = new SyncServerConnection(getBaseContext());
+        TextView certificateErrors = (TextView) findViewById(R.id.certificateErrors);
+        try {
+            connectionObject.buildKeystore();
+            certificateErrors.setText("");
+        } catch (CertificateException e) {
+            Log.d("Certificate Exception", e.getMessage());
+            certificateErrors.setText(R.string.certificate_error_wrong_format);
+        } catch (NoSuchAlgorithmException e) {
+            certificateErrors.setText(R.string.certificate_error_no_such_algorithm);
+        } catch (IOException e) {
+            certificateErrors.setText(R.string.certificate_error_IO_Exception);
+        } catch (KeyStoreException e) {
+            certificateErrors.setText(R.string.certificate_error_Key_Store_Exception);
+        }
     }
 
     @Override
@@ -58,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void afterTextChanged(Editable editable) {
                 saveSettings();
+                testCertificate();
             }
         };
         domainInput.addTextChangedListener(watcher);
@@ -70,7 +96,10 @@ public class MainActivity extends AppCompatActivity {
                 new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         saveSettings();
+                        testCertificate();
                     }
                 });
+
+        testCertificate();
     }
 }

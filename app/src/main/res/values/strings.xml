@@ -3,6 +3,10 @@
     <string name="server_domain_heading">Domain of the sync server:</string>
     <string name="path_heading">Path on the server:</string>
     <string name="certificate_heading">SSL certificate of the CA which signed the server certificate:</string>
+    <string name="certificate_error_wrong_format">This is no valid certificate. Please use X.509 in pem format.</string>
+    <string name="certificate_error_no_such_algorithm">This System does not support X.509 certificates. That might mean that no connection will be possible.</string>
+    <string name="certificate_error_IO_Exception">Could not read certificate data. What did you enter?</string>
+    <string name="certificate_error_Key_Store_Exception">The certificate could not be used. Is it correct?</string>
     <string name="username_heading">Username:</string>
     <string name="password_heading">Password:</string>
     <string name="sync_on_mobile_data_label">Sync on mobile data</string>

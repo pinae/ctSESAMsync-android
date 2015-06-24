@@ -41,7 +41,7 @@ public class SyncServerConnection {
         this.contentContext = contentContext;
     }
 
-    private KeyStore buildKeystore() throws
+    public KeyStore buildKeystore() throws
             KeyStoreException,
             CertificateException,
             NoSuchAlgorithmException,
