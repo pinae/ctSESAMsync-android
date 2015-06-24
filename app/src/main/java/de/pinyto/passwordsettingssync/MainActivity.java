@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             connectionObject.buildKeystore();
             certificateErrors.setText("");
         } catch (CertificateException e) {
-            Log.d("Certificate Exception", e.getMessage());
             certificateErrors.setText(R.string.certificate_error_wrong_format);
         } catch (NoSuchAlgorithmException e) {
             certificateErrors.setText(R.string.certificate_error_no_such_algorithm);
