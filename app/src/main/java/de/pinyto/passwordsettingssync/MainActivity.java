@@ -151,28 +151,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     TextView connectionStatus = (TextView) findViewById(R.id.connectionStatus);
                     new SyncServerRequest(
-                            getBaseContext(),
-                            new Messenger(new ResponseHandler())).execute(
+                        getBaseContext(),
+                        new Messenger(new ResponseHandler())).execute(
                             "/ajax/read.php",
                             "",
-                            Integer.toString(SyncServerRequest.SYNC_RESPONSE));
-                    /*SyncServerConnection connection = new SyncServerConnection(getBaseContext());
-                    String response = connection.makeRequest(
-                        "/ajax/read.php", "", SyncServerRequest.SYNC_RESPONSE);
-                    if (response.length() > 0) {
-                        try {
-                            JSONObject responseObject = new JSONObject(response);
-                            Log.d("response", responseObject.getString("response"));
-                            connectionStatus.setText(R.string.connection_ok);
-                            connectionStatus.setTextColor(Color.GREEN);
-                        } catch (JSONException e) {
-                            connectionStatus.setText(R.string.connection_JSON_Exception);
-                            connectionStatus.setTextColor(Color.RED);
-                        }
-                    } else {
-                        connectionStatus.setText(R.string.connection_send_error);
-                        connectionStatus.setTextColor(Color.RED);
-                    }*/
+                            Integer.toString(SyncServerRequest.SYNC_RESPONSE)
+                        );
                 }
             }
         );
