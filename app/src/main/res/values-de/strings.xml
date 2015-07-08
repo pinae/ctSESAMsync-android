@@ -7,4 +7,13 @@
     <string name="path_heading">Pfad auf dem Server:</string>
     <string name="server_domain_heading">Domain des Syncservers:</string>
     <string name="certificate_heading">SSL Zertifikat der Root-CA, die das Zertifikat des Servers unterschrieben hat:</string>
+    <string name="certificate_error_IO_Exception">Zertifikatsdaten konnten nicht gelesen werden. Sind die daten in einem falschen Zeichensatz?</string>
+    <string name="certificate_error_Key_Store_Exception">Das Zertifikat war nicht nutzbar. Ist es korrekt?</string>
+    <string name="certificate_error_no_such_algorithm">Das System unterstützt keine X.509 Zertifikate. Das heißt, dass keine Synchronisation möglich ist.</string>
+    <string name="certificate_error_wrong_format">Dies ist kein gültiges Zertifikat. Korrekt ist ein einzelnes X.509 Zertifikat im pem Format.</string>
+    <string name="connection_JSON_ButNotOk">Der Server hat im JSON-Format geantwortet, die Antwort hat aber kein OK enthalten. Ist das möglicherweise kein Syncserver, sondern ein anderer Server, der mit JSON antwortet?</string>
+    <string name="connection_JSON_Exception">Die Antwort des Servers war kein JSON. Dies ist kein Syncserver.</string>
+    <string name="connection_ok">Die Verbindung zum Syncserver wurde erfolgreich getesetet.</string>
+    <string name="connection_send_error">Die App konnte keine Anfrage abschicken. Netzwerkprobleme?</string>
+    <string name="test_button_label">Verbindung zum Server testen</string>
 </resources>

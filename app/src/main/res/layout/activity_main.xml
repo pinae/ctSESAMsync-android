@@ -7,7 +7,8 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -139,6 +140,25 @@
                 android:layout_toEndOf="@+id/syncOnMobileData"
                 android:layout_marginTop="14dp"
                 android:layout_marginLeft="6dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/test_button_label"
+                android:id="@+id/testButton"
+                android:layout_below="@+id/syncOnMobileData"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text=""
+                android:id="@+id/connectionStatus"
+                android:layout_below="@+id/testButton"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
 

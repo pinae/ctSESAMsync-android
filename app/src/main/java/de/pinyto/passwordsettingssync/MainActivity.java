@@ -1,15 +1,24 @@
 package de.pinyto.passwordsettingssync;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.KeyStoreException;
@@ -18,6 +27,41 @@ import java.security.cert.CertificateException;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    class ResponseHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            int respCode = msg.what;
+
+            switch (respCode) {
+                case SyncServerRequest.SYNC_RESPONSE: {
+                    Log.d("sync response", "recieved");
+                    String syncData = msg.getData().getString("respData");
+                    Log.d("data", syncData);
+                    TextView connectionStatus = (TextView) findViewById(R.id.connectionStatus);
+                    if (syncData.length() > 0) {
+                        try {
+                            JSONObject responseObject = new JSONObject(syncData);
+                            Log.d("status", responseObject.getString("status"));
+                            if (responseObject.getString("status").equals("ok")) {
+                                connectionStatus.setText(R.string.connection_ok);
+                                connectionStatus.setTextColor(Color.GREEN);
+                            } else {
+                                connectionStatus.setText(R.string.connection_JSON_ButNotOk);
+                                connectionStatus.setTextColor(Color.RED);
+                            }
+                        } catch (JSONException e) {
+                            connectionStatus.setText(R.string.connection_JSON_Exception);
+                            connectionStatus.setTextColor(Color.RED);
+                        }
+                    } else {
+                        connectionStatus.setText(R.string.connection_send_error);
+                        connectionStatus.setTextColor(Color.RED);
+                    }
+                }
+            }
+        }
+    }
 
     private void saveSettings() {
         SharedPreferences settings = getSharedPreferences("settings", MODE_PRIVATE);
@@ -92,12 +136,46 @@ public class MainActivity extends AppCompatActivity {
         passwordInput.addTextChangedListener(watcher);
 
         syncOnMobileDataSwitch.setOnCheckedChangeListener(
-                new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        saveSettings();
-                        testCertificate();
-                    }
-                });
+            new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    saveSettings();
+                    testCertificate();
+                }
+            }
+        );
+
+        Button testButton = (Button) findViewById(R.id.testButton);
+        testButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    TextView connectionStatus = (TextView) findViewById(R.id.connectionStatus);
+                    new SyncServerRequest(
+                            getBaseContext(),
+                            new Messenger(new ResponseHandler())).execute(
+                            "/ajax/read.php",
+                            "",
+                            Integer.toString(SyncServerRequest.SYNC_RESPONSE));
+                    /*SyncServerConnection connection = new SyncServerConnection(getBaseContext());
+                    String response = connection.makeRequest(
+                        "/ajax/read.php", "", SyncServerRequest.SYNC_RESPONSE);
+                    if (response.length() > 0) {
+                        try {
+                            JSONObject responseObject = new JSONObject(response);
+                            Log.d("response", responseObject.getString("response"));
+                            connectionStatus.setText(R.string.connection_ok);
+                            connectionStatus.setTextColor(Color.GREEN);
+                        } catch (JSONException e) {
+                            connectionStatus.setText(R.string.connection_JSON_Exception);
+                            connectionStatus.setTextColor(Color.RED);
+                        }
+                    } else {
+                        connectionStatus.setText(R.string.connection_send_error);
+                        connectionStatus.setTextColor(Color.RED);
+                    }*/
+                }
+            }
+        );
 
         testCertificate();
     }

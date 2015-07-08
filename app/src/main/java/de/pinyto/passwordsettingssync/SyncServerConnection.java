@@ -31,7 +31,7 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 
 /**
- * Use this class to connect to sync serlers. This is used by the service and by the
+ * Use this class to connect to sync servers. This is used by the service and by the
  * activity for testing the settings.
  */
 public class SyncServerConnection {
