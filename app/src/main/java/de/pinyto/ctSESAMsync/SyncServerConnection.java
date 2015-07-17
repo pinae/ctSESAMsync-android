@@ -1,4 +1,4 @@
-package de.pinyto.passwordsettingssync;
+package de.pinyto.ctSESAMsync;
 
 import android.content.Context;
 import android.content.SharedPreferences;

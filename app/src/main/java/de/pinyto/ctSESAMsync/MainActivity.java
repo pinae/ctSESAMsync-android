@@ -1,4 +1,4 @@
-package de.pinyto.passwordsettingssync;
+package de.pinyto.ctSESAMsync;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
             new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    TextView connectionStatus = (TextView) findViewById(R.id.connectionStatus);
                     new SyncServerRequest(
                         getBaseContext(),
                         new Messenger(new ResponseHandler())).execute(

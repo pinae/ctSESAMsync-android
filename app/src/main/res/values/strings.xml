@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Synchronize password settings</string>
+    <string name="app_name">ct SESAM Sync</string>
     <string name="server_domain_heading">Domain of the sync server:</string>
     <string name="path_heading">Path on the server:</string>
     <string name="certificate_heading">SSL certificate of the CA which signed the server certificate:</string>

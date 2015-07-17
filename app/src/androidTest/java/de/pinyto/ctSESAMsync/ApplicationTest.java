@@ -1,4 +1,4 @@
-package de.pinyto.passwordsettingssync;
+package de.pinyto.ctSESAMsync;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
