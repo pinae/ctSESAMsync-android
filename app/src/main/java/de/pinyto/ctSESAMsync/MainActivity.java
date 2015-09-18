@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     String syncData = msg.getData().getString("respData");
                     Log.d("data", syncData);
                     TextView connectionStatus = (TextView) findViewById(R.id.connectionStatus);
-                    if (syncData.length() > 0) {
+                    if (syncData != null && syncData.length() > 0) {
                         try {
                             JSONObject responseObject = new JSONObject(syncData);
                             Log.d("status", responseObject.getString("status"));
@@ -70,14 +69,12 @@ public class MainActivity extends AppCompatActivity {
         EditText certificateInput = (EditText) findViewById(R.id.certificate);
         EditText usernameInput = (EditText) findViewById(R.id.username);
         EditText passwordInput = (EditText) findViewById(R.id.password);
-        Switch syncOnMobileDataSwitch = (Switch) findViewById(R.id.syncOnMobileData);
         SharedPreferences.Editor settingsEditor = settings.edit();
         settingsEditor.putString("serverDomain", domainInput.getText().toString());
         settingsEditor.putString("path", pathInput.getText().toString());
         settingsEditor.putString("certificate", certificateInput.getText().toString());
         settingsEditor.putString("username", usernameInput.getText().toString());
         settingsEditor.putString("password", passwordInput.getText().toString());
-        settingsEditor.putBoolean("syncOnMobileData", syncOnMobileDataSwitch.isChecked());
         settingsEditor.apply();
     }
 
@@ -109,13 +106,11 @@ public class MainActivity extends AppCompatActivity {
         EditText certificateInput = (EditText) findViewById(R.id.certificate);
         EditText usernameInput = (EditText) findViewById(R.id.username);
         EditText passwordInput = (EditText) findViewById(R.id.password);
-        Switch syncOnMobileDataSwitch = (Switch) findViewById(R.id.syncOnMobileData);
         domainInput.setText(settings.getString("serverDomain", ""));
         pathInput.setText(settings.getString("path", ""));
         certificateInput.setText(settings.getString("certificate", ""));
         usernameInput.setText(settings.getString("username", ""));
         passwordInput.setText(settings.getString("password", ""));
-        syncOnMobileDataSwitch.setChecked(settings.getBoolean("syncOnMobileData", true));
 
         TextWatcher watcher = new TextWatcher() {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -134,15 +129,6 @@ public class MainActivity extends AppCompatActivity {
         certificateInput.addTextChangedListener(watcher);
         usernameInput.addTextChangedListener(watcher);
         passwordInput.addTextChangedListener(watcher);
-
-        syncOnMobileDataSwitch.setOnCheckedChangeListener(
-            new CompoundButton.OnCheckedChangeListener() {
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    saveSettings();
-                    testCertificate();
-                }
-            }
-        );
 
         Button testButton = (Button) findViewById(R.id.testButton);
         testButton.setOnClickListener(

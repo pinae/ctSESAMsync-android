@@ -120,33 +120,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/syncOnMobileData"
-                android:layout_below="@+id/password"
-                android:layout_marginTop="10dp"
-                android:checked="true" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="@string/sync_on_mobile_data_label"
-                android:id="@+id/syncOnMobileDataLabel"
-                android:layout_below="@+id/password"
-                android:layout_toRightOf="@+id/syncOnMobileData"
-                android:layout_toEndOf="@+id/syncOnMobileData"
-                android:layout_marginTop="14dp"
-                android:layout_marginLeft="6dp" />
-
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/test_button_label"
                 android:id="@+id/testButton"
-                android:layout_below="@+id/syncOnMobileData"
+                android:layout_below="@+id/password"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
