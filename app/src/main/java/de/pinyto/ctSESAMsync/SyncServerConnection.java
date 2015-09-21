@@ -95,7 +95,7 @@ public class SyncServerConnection {
         try {
             SharedPreferences settings = contentContext.getSharedPreferences(
                     "settings", Context.MODE_PRIVATE);
-            String host = settings.getString("serverDomain", "");
+            String host = DomainExtractor.extractFullDomain(settings.getString("serverDomain", ""));
             String directory = settings.getString("path", "");
             directory = directory.replaceAll("^/+|/+$", "");
             URL url = new URL("https://" + host + "/" + directory + path);
