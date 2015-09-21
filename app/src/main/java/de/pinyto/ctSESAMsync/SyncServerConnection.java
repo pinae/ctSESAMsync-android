@@ -49,11 +49,9 @@ public class SyncServerConnection {
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
         SharedPreferences settings = contentContext.getSharedPreferences(
                 "settings", Context.MODE_PRIVATE);
-        String certificate = settings.getString("certificate", "");
+        String certificate = CertificateCleaner.cleanCertificate(
+                settings.getString("certificate", ""));
         InputStream caInput;
-        if (certificate == null) {
-            certificate = "";
-        }
         try {
             caInput = new ByteArrayInputStream(certificate.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -99,9 +97,7 @@ public class SyncServerConnection {
                     "settings", Context.MODE_PRIVATE);
             String host = settings.getString("serverDomain", "");
             String directory = settings.getString("path", "");
-            if (directory != null) {
-                directory = directory.replaceAll("^/+|/+$", "");
-            }
+            directory = directory.replaceAll("^/+|/+$", "");
             URL url = new URL("https://" + host + "/" + directory + path);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
