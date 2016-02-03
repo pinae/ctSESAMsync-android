@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Messenger;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -104,10 +105,9 @@ public class CertificateLoadingRequest extends AsyncTask<String, Void, JSONObjec
             if (directory.length() <= 0) {
                 path = path.replaceFirst("^/+", "");
             }
-            this.path = params[0];
             this.requestPayload = params[1];
             this.responseType = Integer.parseInt(params[2]);
-            URL url = new URL("https://" + host + "/" + directory);
+            URL url = new URL("https://" + host + "/" + directory + path);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
             connection.connect();
@@ -183,10 +183,10 @@ public class CertificateLoadingRequest extends AsyncTask<String, Void, JSONObjec
                 if (i > 0) {
                     certificateInfo += "\n---------------------------\n";
                 }
-                certificateInfo +=
-                    String.format("MD5: %s", chain.getJSONObject(0).getString("md5")) + "\n" +
-                    String.format("SHA-1: %s", chain.getJSONObject(0).getString("sha1")) + "\n" +
-                    String.format("SHA-256: %s", chain.getJSONObject(0).getString("sha256"));
+                certificateInfo += ":::: " + singleCertInfo.getString("subject") + " ::::\n" +
+                    String.format("MD5: %s", singleCertInfo.getString("md5")) + "\n" +
+                    String.format("SHA-1: %s", singleCertInfo.getString("sha1")) + "\n" +
+                    String.format("SHA-256: %s", singleCertInfo.getString("sha256"));
             }
 
             TextView certInfoView = (TextView) certPopupView.findViewById(R.id.certInfoTextView);
@@ -238,6 +238,7 @@ public class CertificateLoadingRequest extends AsyncTask<String, Void, JSONObjec
         if (result.has("error")) {
             try {
                 String error = result.getString("error");
+                Log.e("error", error);
             } catch (JSONException jsonError) {
                 jsonError.printStackTrace();
             }
