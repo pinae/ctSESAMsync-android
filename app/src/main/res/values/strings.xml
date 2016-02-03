@@ -17,7 +17,7 @@
     <string name="connection_ok">The connection was successfully tested.</string>
     <string name="acceptCertificateButton">accept</string>
     <string name="dismissCertificateButton">dismiss</string>
-    <string name="popupHeading">The server presented a certificate with these fingerprints:</string>
+    <string name="popupHeading">The server presented a certificate chain with these fingerprints:</string>
     <string name="popupQuestion">Is this your server? Only accept the certificate if the fingerprint is correct.</string>
     <string name="deleteCertificate">delete the pinned certificate</string>
 </resources>

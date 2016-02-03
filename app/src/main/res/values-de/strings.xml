@@ -17,7 +17,7 @@
     <string name="test_button_label">Verbindung zum Server testen</string>
     <string name="dismissCertificateButton">abbrechen</string>
     <string name="acceptCertificateButton">akzeptieren</string>
-    <string name="popupHeading">Der Server hat ein Zertifikat mit diesen Fingerabdrücken vorgezeigt:</string>
+    <string name="popupHeading">Der Server hat eine Zertifikatskette mit diesen Fingerabdrücken vorgezeigt:</string>
     <string name="popupQuestion">Ist das dein Syncserver? Akzeptiere das Zertifikat nur, wenn der Fingerabdruck stimmt.</string>
     <string name="deleteCertificate">Das gepinnte Zertifikat löschen</string>
 </resources>
