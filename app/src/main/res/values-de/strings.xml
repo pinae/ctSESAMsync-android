@@ -15,4 +15,9 @@
     <string name="connection_ok">Die Verbindung zum Syncserver wurde erfolgreich getesetet.</string>
     <string name="connection_send_error">Die App konnte keine Anfrage abschicken. Netzwerkprobleme?</string>
     <string name="test_button_label">Verbindung zum Server testen</string>
+    <string name="dismissCertificateButton">abbrechen</string>
+    <string name="acceptCertificateButton">akzeptieren</string>
+    <string name="popupHeading">Der Server hat ein Zertifikat mit diesen Fingerabdrücken vorgezeigt:</string>
+    <string name="popupQuestion">Ist das dein Syncserver? Akzeptiere das Zertifikat nur, wenn der Fingerabdruck stimmt.</string>
+    <string name="deleteCertificate">Das gepinnte Zertifikat löschen</string>
 </resources>

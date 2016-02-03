@@ -1,5 +1,6 @@
 package de.pinyto.ctSESAMsync;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -66,13 +70,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("settings", MODE_PRIVATE);
         EditText domainInput = (EditText) findViewById(R.id.serverDomain);
         EditText pathInput = (EditText) findViewById(R.id.path);
-        EditText certificateInput = (EditText) findViewById(R.id.certificate);
         EditText usernameInput = (EditText) findViewById(R.id.username);
         EditText passwordInput = (EditText) findViewById(R.id.password);
         SharedPreferences.Editor settingsEditor = settings.edit();
         settingsEditor.putString("serverDomain", domainInput.getText().toString());
         settingsEditor.putString("path", pathInput.getText().toString());
-        settingsEditor.putString("certificate", certificateInput.getText().toString());
         settingsEditor.putString("username", usernameInput.getText().toString());
         settingsEditor.putString("password", passwordInput.getText().toString());
         settingsEditor.apply();
@@ -80,18 +82,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void testCertificate() {
         SyncServerConnection connectionObject = new SyncServerConnection(getBaseContext());
-        TextView certificateErrors = (TextView) findViewById(R.id.certificateErrors);
+        Button deleteCertificateButton = (Button) findViewById(R.id.deleteCertificateButton);
         try {
             connectionObject.buildKeystore();
-            certificateErrors.setText("");
-        } catch (CertificateException e) {
-            certificateErrors.setText(R.string.certificate_error_wrong_format);
-        } catch (NoSuchAlgorithmException e) {
-            certificateErrors.setText(R.string.certificate_error_no_such_algorithm);
-        } catch (IOException e) {
-            certificateErrors.setText(R.string.certificate_error_IO_Exception);
-        } catch (KeyStoreException e) {
-            certificateErrors.setText(R.string.certificate_error_Key_Store_Exception);
+            deleteCertificateButton.setVisibility(View.VISIBLE);
+        } catch (CertificateException | NoSuchAlgorithmException |
+                 KeyStoreException | IOException e) {
+            deleteCertificateButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -103,12 +100,10 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences settings = getSharedPreferences("settings", MODE_PRIVATE);
         EditText domainInput = (EditText) findViewById(R.id.serverDomain);
         EditText pathInput = (EditText) findViewById(R.id.path);
-        EditText certificateInput = (EditText) findViewById(R.id.certificate);
         EditText usernameInput = (EditText) findViewById(R.id.username);
         EditText passwordInput = (EditText) findViewById(R.id.password);
         domainInput.setText(settings.getString("serverDomain", ""));
         pathInput.setText(settings.getString("path", ""));
-        certificateInput.setText(settings.getString("certificate", ""));
         usernameInput.setText(settings.getString("username", ""));
         passwordInput.setText(settings.getString("password", ""));
 
@@ -121,12 +116,10 @@ public class MainActivity extends AppCompatActivity {
 
             public void afterTextChanged(Editable editable) {
                 saveSettings();
-                testCertificate();
             }
         };
         domainInput.addTextChangedListener(watcher);
         pathInput.addTextChangedListener(watcher);
-        certificateInput.addTextChangedListener(watcher);
         usernameInput.addTextChangedListener(watcher);
         passwordInput.addTextChangedListener(watcher);
 
@@ -137,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     new SyncServerRequest(
                         getBaseContext(),
-                        new Messenger(new ResponseHandler())).execute(
+                        new Messenger(new ResponseHandler()),
+                        findViewById(R.id.serverDomain),
+                        findViewById(R.id.deleteCertificateButton)).execute(
                             "/ajax/read.php",
                             "",
                             Integer.toString(SyncServerRequest.SYNC_RESPONSE)
@@ -146,6 +141,19 @@ public class MainActivity extends AppCompatActivity {
             }
         );
 
-        testCertificate();
+        Button deleteCertificateButton = (Button) findViewById(R.id.deleteCertificateButton);
+        deleteCertificateButton.setOnClickListener(
+            new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.setVisibility(View.INVISIBLE);
+                    SharedPreferences settings = getSharedPreferences("settings", MODE_PRIVATE);
+                    SharedPreferences.Editor settingsEditor = settings.edit();
+                    settingsEditor.putString("certificate", "");
+                    settingsEditor.apply();
+                }
+            }
+        );
+        this.testCertificate();
     }
 }

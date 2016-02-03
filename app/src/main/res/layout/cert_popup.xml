@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical|center_horizontal">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView2"
+        android:background="#ef5350"
+        android:padding="8dp"
+        android:gravity="center_vertical|center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/popupHeading"
+                android:id="@+id/popupHeading"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:paddingBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="New Text"
+                android:id="@+id/certInfoTextView"
+                android:textColor="#ffffff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/popupQuestion"
+                android:id="@+id/popupQuestion"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/abc_text_size_medium_material"
+                android:paddingTop="8dp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                style="?android:attr/buttonBarStyle"
+                android:gravity="center_horizontal"
+                android:minWidth="120dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/acceptCertificateButton"
+                    android:id="@+id/acceptButton"
+                    android:layout_gravity="start"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:textColor="#d1c4e9"
+                    android:gravity="start" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dismissCertificateButton"
+                    android:id="@+id/dismissButton"
+                    android:layout_gravity="end"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:textColor="#d1c4e9"
+                    android:gravity="end" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

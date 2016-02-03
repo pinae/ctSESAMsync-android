@@ -20,14 +20,14 @@ public class SyncService extends Service {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case REQUEST_SYNC:
-                    new SyncServerRequest(getBaseContext(), msg.replyTo).execute(
+                    new SyncServerRequest(getBaseContext(), msg.replyTo, null, null).execute(
                             "/ajax/read.php",
                             "",
                             Integer.toString(SyncServerRequest.SYNC_RESPONSE));
                     break;
                 case SEND_UPDATE:
                     String updatedData = msg.getData().getString("updatedData");
-                    new SyncServerRequest(getBaseContext(), msg.replyTo).execute(
+                    new SyncServerRequest(getBaseContext(), msg.replyTo, null, null).execute(
                             "/ajax/write.php",
                             "data="+updatedData,
                             Integer.toString(SyncServerRequest.SEND_UPDATE_RESPONSE));

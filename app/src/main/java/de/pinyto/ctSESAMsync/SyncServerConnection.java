@@ -91,14 +91,19 @@ public class SyncServerConnection {
         return sslcontext;
     }
 
-    private HttpsURLConnection establishHttpsConnection(String path) {
+    private HttpsURLConnection establishHttpsConnection(String path) throws CertificateException {
         try {
             SharedPreferences settings = contentContext.getSharedPreferences(
                     "settings", Context.MODE_PRIVATE);
             String host = DomainExtractor.extractFullDomain(settings.getString("serverDomain", ""));
+            host = host.replaceAll("/+$", "");
             String directory = settings.getString("path", "");
             directory = directory.replaceAll("^/+|/+$", "");
-            URL url = new URL("https://" + host + "/" + directory + path);
+            String requestPath = path;
+            if (directory.length() <= 0) {
+                requestPath = requestPath.replaceFirst("^/+", "");
+            }
+            URL url = new URL("https://" + host + "/" + directory + requestPath);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
             connection.setRequestMethod("POST");
@@ -114,35 +119,42 @@ public class SyncServerConnection {
             connection.setDoInput(true);
             return connection;
         } catch (MalformedURLException e) {
-            Log.d("Authentication error",
+            Log.e("Authentication error",
                     "The URL is malformed. Probably host or directory is wrong.");
             e.printStackTrace();
             return null;
         } catch (IOException e) {
-            Log.d("Authentication error", "Could not establish connection.");
+            Log.e("Authentication error", "Could not establish connection.");
             e.printStackTrace();
             return null;
         } catch (NoSuchAlgorithmException e) {
-            Log.d("Authentication error", "TLS or TrustManager is not implemented.");
+            Log.e("Authentication error", "TLS or TrustManager is not implemented.");
             e.printStackTrace();
             return null;
         } catch (KeyManagementException e) {
-            Log.d("Authentication error", "Key management is broken.");
+            Log.e("Authentication error", "Key management is broken.");
             e.printStackTrace();
             return null;
         } catch (KeyStoreException e) {
-            Log.d("Authentication error", "KeyStore is broken.");
-            e.printStackTrace();
-            return null;
-        } catch (CertificateException e) {
-            Log.d("Authentication error", "The local certificate is invalid.");
+            Log.e("Authentication error", "KeyStore is broken.");
             e.printStackTrace();
             return null;
         }
     }
 
     public String makeRequest(String path, String request, int responseType) {
-        HttpsURLConnection connection = establishHttpsConnection(path);
+        HttpsURLConnection connection;
+        try {
+            connection = establishHttpsConnection(path);
+        } catch (CertificateException e) {
+            JSONObject errorResultObject = new JSONObject();
+            try {
+                errorResultObject.put("error", "certificate error");
+            } catch (JSONException jsonError) {
+                jsonError.printStackTrace();
+            }
+            return errorResultObject.toString();
+        }
         if (connection != null) {
             try {
                 DataOutputStream requestStream = new DataOutputStream(connection.getOutputStream());
@@ -162,10 +174,10 @@ public class SyncServerConnection {
                 resultObject.put("responseType", responseType);
                 return resultObject.toString();
             } catch (IOException e) {
-                Log.d("Request error", "IO Error while sending request.");
+                Log.e("Request error", "IO Error while sending request.");
                 e.printStackTrace();
             } catch (JSONException e) {
-                Log.d("Request error", "Could not pack response.");
+                Log.e("Request error", "Could not pack response.");
                 e.printStackTrace();
             } finally {
                 connection.disconnect();

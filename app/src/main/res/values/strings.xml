@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ct SESAM Sync</string>
+    <string name="app_name">c\'t SESAM Sync</string>
     <string name="server_domain_heading">Domain of the sync server:</string>
     <string name="path_heading">Path on the server:</string>
     <string name="certificate_heading">SSL certificate of the CA which signed the server certificate:</string>
@@ -15,4 +15,9 @@
     <string name="connection_JSON_Exception">The response was not in JSON format. The server is probably wrong.</string>
     <string name="connection_JSON_ButNotOk">The response was in JSON format but contained no OK. Maybe this server is no sync server but some other server that returns JSON data?</string>
     <string name="connection_ok">The connection was successfully tested.</string>
+    <string name="acceptCertificateButton">accept</string>
+    <string name="dismissCertificateButton">dismiss</string>
+    <string name="popupHeading">The server presented a certificate with these fingerprints:</string>
+    <string name="popupQuestion">Is this your server? Only accept the certificate if the fingerprint is correct.</string>
+    <string name="deleteCertificate">delete the pinned certificate</string>
 </resources>
