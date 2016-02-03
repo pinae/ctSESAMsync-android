@@ -38,14 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
             switch (respCode) {
                 case SyncServerRequest.SYNC_RESPONSE: {
-                    Log.d("sync response", "recieved");
                     String syncData = msg.getData().getString("respData");
-                    Log.d("data", syncData);
                     TextView connectionStatus = (TextView) findViewById(R.id.connectionStatus);
                     if (syncData != null && syncData.length() > 0) {
                         try {
                             JSONObject responseObject = new JSONObject(syncData);
-                            Log.d("status", responseObject.getString("status"));
                             if (responseObject.getString("status").equals("ok")) {
                                 connectionStatus.setText(R.string.connection_ok);
                                 connectionStatus.setTextColor(Color.GREEN);
